@@ -1,0 +1,36 @@
+version: "3.7"
+
+services:
+ nginx:
+  build: nginx
+  command: sh -c "yarn install && yarn run dev"
+  working_dir: /app
+
+  ports:
+   - 3000:3000
+
+  volumes:
+   - ./:/app
+
+  environment:
+   MYSQL_HOST: mysql
+   MYSQL_USER: root
+   MYSQL_PASSWORD_FILE: /app/pass_file.txt
+   MYSQL_DB: todos
+
+ mysql:
+  image: mysql:5.7
+
+  volumes:
+   - wp-db:/var/lib/mysql
+
+  environment:
+   MYSQL_ROOT_PASSWORD: secret 
+   MYSQL_DATABASE: todos
+
+networks:
+ backend:
+
+volumes:
+ wp-db:
+ wp-files:

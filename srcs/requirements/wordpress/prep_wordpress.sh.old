@@ -1,0 +1,6 @@
+if [ ! -e "wordpress/index.php" ]
+then
+	wget https://wordpress.org/wordpress-5.8.2.tar.gz
+	tar x -zvf wordpress-5.8.2.tar.gz
+	rm wordpress-5.8.2.tar.gz
+fi

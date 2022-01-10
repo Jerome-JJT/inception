@@ -1,0 +1,25 @@
+2022/01/03 17:34:12 [emerg] 67#67: invalid number of arguments in "root" directive in /etc/nginx/http.d/wordpress.conf:9
+2022/01/03 17:36:49 [emerg] 1#1: invalid number of arguments in "root" directive in /etc/nginx/http.d/wordpress.conf:7
+2022/01/03 17:42:12 [emerg] 1#1: invalid number of arguments in "root" directive in /etc/nginx/http.d/wordpress.conf:7
+2022/01/05 12:27:03 [emerg] 14#14: the size 10485760 of shared memory zone "SSL" conflicts with already declared size 2097152 in /etc/nginx/http.d/wordpress.conf:11
+2022/01/05 12:30:38 [emerg] 15#15: cannot load certificate "/nginx-selfsigned.crt": BIO_new_file() failed (SSL: error:02001002:system library:fopen:No such file or directory:fopen('/nginx-selfsigned.crt','r') error:2006D080:BIO routines:BIO_new_file:no such file)
+2022/01/05 12:31:31 [emerg] 22#22: cannot load certificate "/nginx-selfsigned.crt": BIO_new_file() failed (SSL: error:02001002:system library:fopen:No such file or directory:fopen('/nginx-selfsigned.crt','r') error:2006D080:BIO routines:BIO_new_file:no such file)
+2022/01/05 12:32:27 [emerg] 26#26: cannot load certificate "/nginx-selfsigned.crt": BIO_new_file() failed (SSL: error:02001002:system library:fopen:No such file or directory:fopen('/nginx-selfsigned.crt','r') error:2006D080:BIO routines:BIO_new_file:no such file)
+2022/01/05 12:33:04 [emerg] 30#30: SSL_CTX_use_PrivateKey("/nginx-selfsigned.key") failed (SSL: error:0B080074:x509 certificate routines:X509_check_private_key:key values mismatch)
+2022/01/08 18:34:28 [emerg] 27#27: bind() to 0.0.0.0:80 failed (98: Address in use)
+2022/01/08 18:34:28 [emerg] 27#27: bind() to [::]:80 failed (98: Address in use)
+2022/01/08 18:34:28 [emerg] 27#27: bind() to 0.0.0.0:443 failed (98: Address in use)
+2022/01/08 18:34:28 [emerg] 27#27: bind() to [::]:443 failed (98: Address in use)
+2022/01/08 18:34:28 [emerg] 27#27: bind() to 0.0.0.0:80 failed (98: Address in use)
+2022/01/08 18:34:28 [emerg] 27#27: bind() to [::]:80 failed (98: Address in use)
+2022/01/08 18:34:28 [emerg] 27#27: bind() to 0.0.0.0:443 failed (98: Address in use)
+2022/01/08 18:34:28 [emerg] 27#27: bind() to [::]:443 failed (98: Address in use)
+2022/01/08 18:34:28 [emerg] 27#27: bind() to 0.0.0.0:80 failed (98: Address in use)
+2022/01/08 18:34:28 [emerg] 27#27: bind() to [::]:80 failed (98: Address in use)
+2022/01/08 18:34:28 [emerg] 27#27: bind() to 0.0.0.0:443 failed (98: Address in use)
+2022/01/08 18:34:28 [emerg] 27#27: bind() to [::]:443 failed (98: Address in use)
+2022/01/08 18:35:09 [emerg] 1#1: unexpected end of parameter, expecting ";" in command line
+2022/01/08 18:36:44 [emerg] 14#14: unexpected end of parameter, expecting ";" in command line
+2022/01/08 18:37:27 [emerg] 1#1: unexpected end of parameter, expecting ";" in command line
+2022/01/08 18:38:37 [emerg] 1#1: unexpected end of parameter, expecting ";" in command line
+2022/01/08 18:38:59 [emerg] 1#1: unknown directive "daemon off" in command line

@@ -1,0 +1,50 @@
+# syntax=docker/dockerfile:1
+FROM alpine
+
+
+RUN apk add curl nano
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN chmod +x wp-cli.phar
+
+RUN apk add php php-json php-phar php-openssl php-iconv php-mysqli php php-mysqli php-fpm php-json
+
+# RUN ./wp-cli.phar core --path=/wordpress download
+
+COPY php.ini /etc/php7/
+COPY www.conf /etc/php7/php-fpm.d/
+
+RUN mkdir /wordpress
+COPY wp-config.php /wordpress
+
+ARG WP_SCRIPT="prep_wordpress.sh"
+
+
+
+
+#ARG WP="./wp-cli.phar core --path=/wordpress"
+
+#RUN $WP download
+#RUN echo "test"
+##CMD ["./wp-cli.phar", "core", "--path=/wordpress", "install", "--url=sitedelamortquitue.ch", "--title='Mort qui tue'", "--admin_user=Jerome", "--admin_email=moonmoney@gmail.com", "--admin_password=pass"]
+#RUN ["./wp-cli.phar", "core", "--path=/wordpress", "install", "--url=\"sitedelamortquitue.ch\"", "--title=\"Mort qui tue\"", "--admin_user=\"Jerome\"", "--admin_email=\"moonmoney@gmail.com\"", "--admin_password=\"pass\""]
+
+
+COPY $WP_SCRIPT .
+RUN dos2unix $WP_SCRIPT
+#RUN sh $WP_SCRIPT
+# && rm $WP_SCRIPT
+
+
+
+RUN apk add php php-mysqli php-fpm php-json
+##RUN apk add php php-bcmath php-cli php-common php-curl php-gd php-intl php-mbstring php-opcache php-soap php-sqlite3 php-xml php-xmlrpc php-xsl php-zip php-common
+
+
+COPY php.ini /etc/php7/
+COPY www.conf /etc/php7/php-fpm.d/
+
+##RUN adduser -S www-data
+##RUN addgroup -S www-data
+
+#WORKDIR /etc/init.d
+#CMD ["./start_wordpress.sh", "--nodaemonize"]

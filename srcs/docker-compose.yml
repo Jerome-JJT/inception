@@ -1,36 +1,61 @@
 version: "3.7"
 
 services:
+ wordpress:
+  build: requirements/wordpress
+  restart: on-failure
+
+  env_file:
+   - .env
+
+  depends_on:
+   - mariadb
+
+  volumes:
+   - ~/data/wp:/wordpress
+   
+  networks:
+   - net
+
  nginx:
-  build: nginx
-  command: sh -c "yarn install && yarn run dev"
-  working_dir: /app
+  build: requirements/nginx
+  restart: on-failure
+
+  env_file:
+   - .env
 
   ports:
-   - 3000:3000
+   - 443:443
+
+  depends_on:
+   - wordpress
 
   volumes:
-   - ./:/app
+   - ~/data/wp:/wordpress
 
-  environment:
-   MYSQL_HOST: mysql
-   MYSQL_USER: root
-   MYSQL_PASSWORD_FILE: /app/pass_file.txt
-   MYSQL_DB: todos
+  networks:
+   - net
 
- mysql:
-  image: mysql:5.7
 
+ mariadb:
+  build: requirements/mariadb
+  restart: on-failure
+
+  env_file:
+   - .env
+
+  ports:
+   - 4040:3306
+   
   volumes:
-   - wp-db:/var/lib/mysql
+   - ~/data/db:/var/lib/mysql
 
-  environment:
-   MYSQL_ROOT_PASSWORD: secret 
-   MYSQL_DATABASE: todos
+  networks:
+   - net
 
 networks:
- backend:
+ net:
 
 volumes:
- wp-db:
- wp-files:
+ db:
+ wp:

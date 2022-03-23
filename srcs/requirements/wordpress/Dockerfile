@@ -12,13 +12,11 @@ COPY php.ini /etc/php7/
 COPY www.conf /etc/php7/php-fpm.d/
 
 RUN mkdir /wordpress
-COPY wp-config.php /wordpress
-
-COPY php.ini /etc/php7/
-COPY www.conf /etc/php7/php-fpm.d/
+COPY wp-config.php /
 
 
 COPY "./start_wordpress.sh" .
 RUN dos2unix "./start_wordpress.sh"
+RUN chmod +x "./start_wordpress.sh"
 
 CMD ["./start_wordpress.sh"]

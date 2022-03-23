@@ -9,7 +9,6 @@ FROM alpine
 
 COPY --from=build nginx-selfsigned.key nginx-selfsigned.crt .
 
-#RUN apk add nano
 RUN apk add nginx
 
 COPY mysite.conf /etc/nginx/http.d/

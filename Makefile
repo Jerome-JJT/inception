@@ -1,44 +1,48 @@
 
-APP_NAME		= inception
+APP_NAME	= inception
+
+COMPOSE_DIR	= -f srcs/docker-compose.yml
+ENV_FILE	= --env-file srcs/.env
+
+#COMPOSE_DIR	= -f bonus/bonus-compose.yml
+#ENV_FILE	= --env-file bonus/.env
+DOCKER		= docker-compose ${COMPOSE_DIR} ${ENV_FILE} -p ${APP_NAME}
 
 
-COMPOSE_DIR		= -f srcs/test-compose.yml
-ENV_FILE		= --env-file srcs/.env
-DOCK			= docker-compose ${COMPOSE_DIR} ${ENV_FILE} -p ${APP_NAME}
 
-AR			= ar rcs
-CP			= cp -f
-RM			= rm -f
 
-CFLAGS		= -Wall -Wextra -Werror
+all:		build start
 
-.c.o:
-			${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
-all:		
-		${DOCK} up -d
+build:		#wordpress nginx mariadb
+		${DOCKER} build
 
-test:
-		${DOCK_TEST} up -d
-utest:
-		${DOCK_TEST} down
-rtest:
-		${DOCK_TEST} up -d --build
+wordpress:
+		${DOCKER} build wordpress
+		${DOCKER} up -d wordpress
 
-logs:
-		${DOCK_TEST} logs
+nginx:
+		${DOCKER} build nginx
+		${DOCKER} up -d nginx
 
-flogs:
-		${DOCK_TEST} logs -f
+mariadb:
+		${DOCKER} build mariadb
+		${DOCKER} up -d mariadb
 
-bonus:		${NAMEB_C} ${NAMEB_S}
+redis:
+		${DOCKER} build redis
+		${DOCKER} up -d redis
 
-clean:
-			${DOCK} down
 
-fclean:		clean
-			${DOCK} down --volumes
+start:
+		${DOCKER} up -d
 
-re:			fclean all
+down:
+		${DOCKER} down
 
-.PHONY:		all bonus clean fclean re
+clean:		
+		${DOCKER} down --volumes
+
+re:		clean all
+
+.PHONY:		all build wordpress nginx mariadb start down clean re

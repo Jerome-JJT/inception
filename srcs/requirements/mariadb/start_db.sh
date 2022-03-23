@@ -1,40 +1,38 @@
 #!/bin/sh
 
-#mysqld_safe --datadir='/var/lib/mysql' & 
-mariadbd-safe --datadir='/var/lib/mysql' &
-#sleep 3
+if [ ! -e ".setuped" ];
+then
 
-mkdir /here
+    #mysqld_safe --datadir='/var/lib/mysql' & 
+    mariadbd-safe --datadir='/var/lib/mysql' --pid-file='/var/run/mysqld/mysqld.pid' --no-watch
+    
+    while [ ! -f '/var/run/mysqld/mysqld.pid' ] ;
+    do
+        echo "wait for service..."
+        sleep 1
+    done
 
-#env >> lo.txt
+    # Make sure that NOBODY can access the server without a password
+    mariadb -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$DB_ROOT_PASSWORD')"
+    # Kill the anonymous users
+    mariadb -e "DROP USER ''@'localhost'"
+    # Kill off the demo database
+    mariadb -e "DROP DATABASE test"
 
-#echo $DB_ROOT_PASSWORD  >> lo.txt
-#echo $($DB_USER)  >> lo.txt
+    mariadb -e "CREATE DATABASE $DB_NAME" 
+    mariadb -e "CREATE USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD'"
+    #mariadb -e "SET PASSWORD FOR '$DB_USER'@'%' = PASSWORD('$DB_PASSWORD')"
+    mariadb -e "GRANT ALL PRIVILEGES ON $DB_NAME.* to '$DB_USER'@'%'"
 
+    #mariadb -e "select user, host from mysql.user"
+    # Make our changes take effect
+    mariadb -e "FLUSH PRIVILEGES"
+    # Any subsequent tries to run queries this way will get access denied because lack of usr/pwd param
 
-# Make sure that NOBODY can access the server without a password
-mariadb -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$DB_ROOT_PASSWORD')"
-# Kill the anonymous users
-mariadb -e "DROP USER ''@'localhost'"
-# Kill off the demo database
-mariadb -e "DROP DATABASE test"
+    touch .setuped
 
-mariadb -e "CREATE DATABASE $DB_NAME" 
-mariadb -e "CREATE USER '$DB_USER'@'localhost' IDENTIFIED BY '$DB_PASSWORD'"
-mariadb -e "GRANT ALL PRIVILEGES on '$DB_NAME'.* to '$DB_USER'@'localhost'"
+    pkill mariadb
+fi
 
-
-# Make our changes take effect
-mariadb -e "FLUSH PRIVILEGES"
-# Any subsequent tries to run queries this way will get access denied because lack of usr/pwd param
-
-
-
-
-#CREATE USER 'newuser'@'localhost' IDENTIFIED BY 'password';
-#GRANT ALL PRIVILEGES on new_wp.* to wpuser@localhost IDENTIFIED 'myp@Ssw0Rd';
-#GRANT ALL PRIVILEGES on new_wp.* to wpuser@localhost;
-
-pkill mariadb
 
 mariadbd-safe --datadir='/var/lib/mysql'

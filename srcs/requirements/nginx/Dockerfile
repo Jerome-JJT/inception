@@ -7,7 +7,7 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 -subj '/C=CH/ST=Vaud/L=.
 
 FROM alpine:3.15.4
 
-COPY --from=build nginx-selfsigned.key nginx-selfsigned.crt .
+COPY --from=build nginx-selfsigned.key nginx-selfsigned.crt ./
 
 RUN apk add nginx
 

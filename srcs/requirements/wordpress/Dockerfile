@@ -2,7 +2,7 @@
 FROM alpine:3.15.4
 
 
-RUN apk add cur
+RUN apk add curl
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar
 

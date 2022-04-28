@@ -8,9 +8,12 @@ then
     
     while [ ! -f '/var/run/mysqld/mysqld.pid' ] ;
     do
+        echo "wait for service."
+        sleep 1
         echo "wait for service..."
         sleep 1
     done
+    echo "service started"
 
     # Make sure that NOBODY can access the server without a password
     mariadb -e "SET PASSWORD FOR 'root'@'localhost' = PASSWORD('$DB_ROOT_PASSWORD')"

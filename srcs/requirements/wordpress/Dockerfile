@@ -1,8 +1,8 @@
 # syntax=docker/dockerfile:1
-FROM alpine
+FROM alpine:3.15.4
 
 
-RUN apk add curl nano
+RUN apk add cur
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar
 

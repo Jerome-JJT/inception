@@ -41,11 +41,14 @@ services:
   build: requirements/mariadb
   restart: on-failure
 
+#  stdin_open: true # docker run -i
+#  tty: true        # docker run -t
+  
   env_file:
    - .env
 
-  ports:
-   - 4040:3306
+#  ports:
+#   - 4040:3306
    
   volumes:
    - ~/data/db:/var/lib/mysql

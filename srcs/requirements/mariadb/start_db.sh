@@ -2,8 +2,8 @@
 
 if [ ! -e ".setuped" ];
 then
+    mariadb-install-db --user=mysql --datadir=/var/lib/mysql
 
-    #mysqld_safe --datadir='/var/lib/mysql' & 
     mariadbd-safe --datadir='/var/lib/mysql' --pid-file='/var/run/mysqld/mysqld.pid' --no-watch
     
     while [ ! -f '/var/run/mysqld/mysqld.pid' ] ;

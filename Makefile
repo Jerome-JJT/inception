@@ -8,14 +8,14 @@ ENV_FILE	= --env-file srcs/.env
 #ENV_FILE	= --env-file bonus/.env
 DOCKER		= docker-compose ${COMPOSE_DIR} ${ENV_FILE} -p ${APP_NAME}
 
-
+RM			= rm -rf
 
 
 all:		build start
 
 
 build:		#wordpress nginx mariadb
-		${DOCKER} build
+		${DOCKER} build --no-cache
 
 wordpress:
 		${DOCKER} build wordpress
@@ -42,6 +42,8 @@ down:
 
 clean:		
 		${DOCKER} down --volumes
+		${RM} ~/data/wp/*
+		${RM} ~/data/db/*
 
 re:		clean all
 

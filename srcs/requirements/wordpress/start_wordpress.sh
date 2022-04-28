@@ -3,6 +3,8 @@ WP="./wp-cli.phar --path=/wordpress"
 
 if [ ! -e /wordpress/wp-config.php ]
 then
+	sleep 10
+	
 	$WP core download
  
     $WP core install --url="$S_URL" --title="$S_TITLE" --admin_email="$S_ADMIN_MAIL" --admin_user="$S_ADMIN" --admin_password="$S_ADMIN_PASS"

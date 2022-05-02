@@ -8,9 +8,12 @@ then
     
     while [ ! -f '/var/run/mysqld/mysqld.pid' ] ;
     do
+        echo "wait for service."
+        sleep 1
         echo "wait for service..."
         sleep 1
     done
+    echo "service started"
 
     # Kill the anonymous users
     mariadb -e "DROP USER ''@'localhost'"

@@ -8,12 +8,9 @@ then
     
     while [ ! -f '/var/run/mysqld/mysqld.pid' ] ;
     do
-        echo "wait for service."
-        sleep 1
         echo "wait for service..."
         sleep 1
     done
-    echo "service started"
 
     # Kill the anonymous users
     mariadb -e "DROP USER ''@'localhost'"
@@ -21,7 +18,7 @@ then
     # Kill off the demo database
     mariadb -e "DROP DATABASE test"
 
-    mariadb -e "CREATE DATABASE $DB_NAME"
+    mariadb -e "CREATE DATABASE $DB_NAME" 
     mariadb -e "CREATE USER '$DB_USER'@'%' IDENTIFIED BY '$DB_PASSWORD'"
     
     mariadb -e "GRANT ALL PRIVILEGES ON $DB_NAME.* to '$DB_USER'@'%'"
@@ -39,4 +36,3 @@ fi
 
 
 mariadbd-safe --datadir='/var/lib/mysql'
-
